@@ -18,7 +18,7 @@ const Page: FC<Props> = (props) => {
   return (
     <div>
       <Heading
-        title="Code to Destiny"
+        title="Code-to-Destiny"
         description="Code to Destiny is a platform for students to learn and get help from teachers"
         keywords="Prograaming,MERN,Redux,Machine Learning"
       />
