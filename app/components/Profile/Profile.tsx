@@ -7,7 +7,7 @@ import ProfileInfo from "./ProfileInfo";
 import ChangePassword from "./ChangePassword";
 import CourseCard from "../Course/CourseCard";
 import { useGetUsersAllCoursesQuery } from "@/redux/features/courses/coursesApi";
-//import { useRouter } from 'next/router';
+import { useRouter } from "next/navigation";
 
 type Props = {
   user: any;
@@ -18,8 +18,9 @@ const Profile: FC<Props> = ({ user }) => {
   const [avatar, setAvatar] = useState(null);
   const [logout, setLogout] = useState(false);
   const [courses, setCourses] = useState([]);
+  const router = useRouter();
   const { data, isLoading } = useGetUsersAllCoursesQuery(undefined, {});
-//const router = useRouter();
+
   const {} = useLogOutQuery(undefined, {
     skip: !logout ? true : false,
   });
@@ -27,10 +28,12 @@ const Profile: FC<Props> = ({ user }) => {
   const [active, setActive] = useState(1);
 
   const logOutHandler = async () => {
+    await signOut({ redirect: false})
     setLogout(true);
-    await signOut({redirect:false,callbackUrl:'/' });
-//router.push("/")  
-};
+    if (typeof window !== "undefined") {
+      window.location.reload()
+    }
+  };
 
   if (typeof window !== "undefined") {
     window.addEventListener("scroll", () => {
@@ -56,7 +59,7 @@ const Profile: FC<Props> = ({ user }) => {
   return (
     <div className="w-[85%] flex mx-auto">
       <div
-        className={`w-[60px] 800px:w-[310px] h-[450px] dark:bg-slate-900 bg-opacity-90 border bg-white dark:border-[#ffffff1d] border-[#00000014] rounded-[5px] shadow-sm dark:shadow-sm mt-[80px] mb-[80px] sticky ${
+        className={`w-[60px] 800px:w-[310px] h-[450px] dark:text-white dark:bg-slate-900 bg-opacity-90 border bg-white dark:border-[#ffffff1d] border-[#00000014] rounded-[5px] shadow-sm dark:shadow-sm mt-[80px] mb-[80px] sticky ${
           scroll ? "top-[120px]" : "top-[30px]"
         } left-[30px]`}
       >

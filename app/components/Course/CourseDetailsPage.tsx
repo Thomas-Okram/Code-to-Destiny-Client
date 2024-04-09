@@ -43,20 +43,21 @@ const CourseDetailsPage = ({ id }: Props) => {
       setClientSecret(paymentIntentData?.client_secret);
     }
   }, [paymentIntentData]);
-
+const meta = {
+  title: data?.course?.name + " - ELearning",
+  description:
+    "ELearning is a programming community which is developed by shahriar sajeeb for helping programmers",
+    image :`${process.env.WEB_URL}/meta-image.webp`,
+  keywords:data?.course?.tags
+}
   return (
     <>
       {isLoading ? (
         <Loader />
       ) : (
         <div>
-          <Heading
-            title={data.course.name + " - ELearning"}
-            description={
-              "ELearning is a programming community which is developed by shahriar sajeeb for helping programmers"
-            }
-            keywords={data?.course?.tags}
-          />
+
+          <Heading meta={meta}/>
           <Header
             route={route}
             setRoute={setRoute}

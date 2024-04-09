@@ -174,12 +174,21 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                       />
                     </Link>
                   ) : (
-                    <HiOutlineUserCircle
-                      size={25}
-                      className="hidden 800px:block cursor-pointer dark:text-white text-black"
-                      onClick={() => setOpen(true)}
-                    />
-                  )}
+                    <div className={"w-full flex flex-col gap-2 px-3"}>
+                    <p onClick={() =>{  
+                      setRoute("Login")
+                      setOpen(true)
+                      setOpenSidebar(!openSidebar)
+                    }} className="w-[100%] bg-[#37a39a] py-2 px-3 text-center text-white cursor-pointer rounded-lg">Login</p>
+                  <p onClick={() =>{
+                      setOpenSidebar(!openSidebar)
+                    setRoute("Sign-Up")
+                    setOpen(true)}}
+                    className={"w-[100%] border-[#37a39a] bg-transparent border py-2 px-3 text-center text-black dark:text-white cursor-pointer rounded-lg"}> Sign up</p>
+                 </div>
+                 )}
+           
+                  
                   <br />
                   <br />
                   <p className="text-[16px] px-2 pl-5 text-black dark:text-white">

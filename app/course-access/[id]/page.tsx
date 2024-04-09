@@ -9,19 +9,20 @@ type Props = {
     params:any;
 }
 
+
 const Page = ({params}: Props) => {
     const id = params.id;
   const { isLoading, error, data,refetch } = useLoadUserQuery(undefined, {});
-
+console.log("id",id)
   useEffect(() => {
-    if (data) {
-      const isPurchased = data.user.courses.find(
-        (item: any) => item._id === id
-      );
-      if (!isPurchased) {
-        redirect("/");
-      }
-    }
+  //  if (data) {
+      // const isPurchased = data.user.courses.find(
+      //   (item: any) => item._id === id
+      // );
+     // if (!isPurchased) {
+        //redirect("/");
+      //}
+   // }
     if (error) {
       redirect("/");
     }
@@ -29,12 +30,13 @@ const Page = ({params}: Props) => {
 
   return (
    <>
+
    {
     isLoading ? (
         <Loader />
     ) : (
         <div>
-          <CourseContent id={id} user={data.user} />
+          <CourseContent id={id} user={data?.user} />
         </div>
     )
    }

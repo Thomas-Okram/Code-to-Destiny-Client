@@ -16,9 +16,16 @@ const CourseContent = ({ id,user }: Props) => {
   const [open, setOpen] = useState(false);
   const [route, setRoute] = useState('Login')
   const data = contentData?.content;
-
+console.log(data)
   const [activeVideo, setActiveVideo] = useState(0);
+const meta = {
+  // title:data?[activeVideo]?.title,
+  title:"anything",
+              description:"anything",
+           //   keywords:data?[activeVideo]?.tags,
+              image :`${process.env.WEB_URL}/meta-image.webp`,
 
+}
   return (
     <>
       {isLoading ? (
@@ -28,9 +35,7 @@ const CourseContent = ({ id,user }: Props) => {
           <Header activeItem={1} open={open} setOpen={setOpen} route={route} setRoute={setRoute} />
           <div className="w-full grid 800px:grid-cols-10">
             <Heading
-              title={data[activeVideo]?.title}
-              description="anything"
-              keywords={data[activeVideo]?.tags}
+             meta={meta}
             />
             <div className="col-span-7">
               <CourseContentMedia

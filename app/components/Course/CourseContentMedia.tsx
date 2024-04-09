@@ -126,13 +126,13 @@ const CourseContentMedia = ({
     if (error) {
       if ("data" in error) {
         const errorMessage = error as any;
-        toast.error(errorMessage.data.message);
+        toast.error(errorMessage?.data?.message);
       }
     }
     if (answerError) {
       if ("data" in answerError) {
         const errorMessage = error as any;
-        toast.error(errorMessage.data.message);
+        toast.error(errorMessage?.data?.message);
       }
     }
     if (reviewSuccess) {
@@ -148,7 +148,7 @@ const CourseContentMedia = ({
     if (reviewError) {
       if ("data" in reviewError) {
         const errorMessage = error as any;
-        toast.error(errorMessage.data.message);
+        toast.error(errorMessage?.data?.message);
       }
     }
     if (replySuccess) {
@@ -158,7 +158,7 @@ const CourseContentMedia = ({
     if (replyError) {
       if ("data" in replyError) {
         const errorMessage = error as any;
-        toast.error(errorMessage.data.message);
+        toast.error(errorMessage?.data?.message);
       }
     }
   }, [

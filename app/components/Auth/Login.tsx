@@ -54,7 +54,7 @@ const Login: FC<Props> = ({ setRoute, setOpen, refetch }) => {
   const { errors, touched, values, handleChange, handleSubmit } = formik;
 
   return (
-    <div className="w-full">
+    <div className="w-full dark:text-white">
       <h1 className={`${styles.title}`}>Login to Code to Destiny</h1>
       <form onSubmit={handleSubmit}>
         <label className={`${styles.label}`} htmlFor="email">
@@ -119,13 +119,14 @@ const Login: FC<Props> = ({ setRoute, setOpen, refetch }) => {
             className="cursor-pointer mr-2"
             onClick={() => signIn("google")}
           />
+          <span className="dark:bg-white dark:rounded-[50%] p-[0.1rem]">
           <AiFillGithub
             size={30}
-            className="cursor-pointer ml-2"
+            className="cursor-pointer ml-2  "
             onClick={() => signIn("github")}
-          />
+          /></span>
         </div>
-        <h5 className="text-center pt-4 font-Poppins text-[14px]">
+        <h5 className="text-center pt-4 font-Poppins text-[14px] dark-text-white">
           Don&apos;t have any account?{" "}
           <span
             className="text-[#2190ff] pl-1 cursor-pointer"

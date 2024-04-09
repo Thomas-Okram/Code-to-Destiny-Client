@@ -229,7 +229,13 @@ const CourseDetails = ({
                 </h4>
               </div>
               <div className="flex items-center">
-                {isPurchased ? (
+              <Link
+                    className={`${styles.button} !w-[180px] my-3 font-Poppins cursor-pointer !bg-[crimson]`}
+                    href={`/course-access/${data._id}`}
+                  >
+                    Enter to Course
+                  </Link>
+                {/* {isPurchased ? (
                   <Link
                     className={`${styles.button} !w-[180px] my-3 font-Poppins cursor-pointer !bg-[crimson]`}
                     href={`/course-access/${data._id}`}
@@ -243,7 +249,7 @@ const CourseDetails = ({
                   >
                     Buy Now {data.price}$
                   </div>
-                )}
+                )} */}
               </div>
               <br />
               <p className="pb-1 text-black dark:text-white">

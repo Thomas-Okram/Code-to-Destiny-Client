@@ -59,7 +59,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
 
   return (
     <>
-      <div className="w-full flex justify-center">
+      <div className="w-full flex justify-center dark:text-white">
         <div className="relative">
           <Image
             src={user.avatar || avatar ? user.avatar.url || avatar : avatarIcon}
@@ -78,7 +78,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
           />
           <label htmlFor="avatar">
             <div className="w-[30px] h-[30px] bg-slate-900 rounded-full absolute bottom-2 right-2 flex items-center justify-center cursor-pointer">
-              <AiOutlineCamera size={20} className="z-1" />
+              <AiOutlineCamera size={20} className="z-1 dark:text-white" />
             </div>
           </label>
         </div>
@@ -89,7 +89,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
         <form onSubmit={handleSubmit}>
           <div className="800px:w-[50%] m-auto block pb-4">
             <div className="w-[100%]">
-              <label className="block pb-2">Full Name</label>
+              <label className="block pb-2 dark:text-white">Full Name</label>
               <input
                 type="text"
                 className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
@@ -98,7 +98,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
-            <div className="w-[100%] pt-2">
+            <div className="w-[100%] pt-2 dark:text-white">
               <label className="block pb-2">Email Address</label>
               <input
                 type="text"

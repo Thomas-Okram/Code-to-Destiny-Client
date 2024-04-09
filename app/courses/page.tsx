@@ -41,7 +41,12 @@ const Page = (props: Props) => {
   }, [data, category, search]);
 
   const categories = categoriesData?.layout.categories;
-
+const meta = {
+  title:"All courses - Code to Destiny",
+  description:"Code to Destiny is a programming community.",
+  keywords: "  programming community, coding skills, expert insights, collaboration, growth",
+  image :`${process.env.WEB_URL}/meta-image.webp`
+}
   return (
     <div>
       {isLoading ? (
@@ -57,11 +62,7 @@ const Page = (props: Props) => {
           />
           <div className="w-[95%] 800px:w-[85%] m-auto min-h-[70vh]">
             <Heading
-              title={"All courses - Code to Destiny"}
-              description={"Code to Destiny is a programming community."}
-              keywords={
-                "programming community, coding skills, expert insights, collaboration, growth"
-              }
+           meta={meta}
             />
             <br />
             <div className="w-full flex items-center flex-wrap">

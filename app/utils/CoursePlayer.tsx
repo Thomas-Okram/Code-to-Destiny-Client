@@ -15,7 +15,7 @@ const CoursePlayer: FC<Props> = ({ videoUrl }) => {
   useEffect(() => {
     axios
       .post(
-        "https://api.codetodestiny.com/api/v1/getVdoCipherOTP",
+        `${process.env.NEXT_PUBLIC_SERVER_URI}getVdoCipherOTP`,
         {
           videoId: videoUrl,
         }
