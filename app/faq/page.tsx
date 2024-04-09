@@ -21,6 +21,7 @@ const Page = (props: Props) => {
 
   return (
     <div className="min-h-screen">
+           <title>{meta?.title}</title>
       <Heading
    meta={meta}
       />

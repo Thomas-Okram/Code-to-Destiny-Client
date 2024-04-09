@@ -19,6 +19,7 @@ const Page = (props: Props) => {
 
   return (
     <div>
+           <title>{meta?.title}</title>
       <Heading
  meta={meta}
       />

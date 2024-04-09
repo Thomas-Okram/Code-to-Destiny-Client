@@ -22,6 +22,7 @@ const meta = {
 }
   return (
     <div className="min-h-screen">
+           <title>{meta?.title}</title>
       <Protected>
         <Heading
    meta={meta}

@@ -119,12 +119,12 @@ const Login: FC<Props> = ({ setRoute, setOpen, refetch }) => {
             className="cursor-pointer mr-2"
             onClick={() => signIn("google")}
           />
-          <span className="dark:bg-white dark:rounded-[50%] p-[0.1rem]">
+       
           <AiFillGithub
             size={30}
-            className="cursor-pointer ml-2  "
+            className="cursor-pointer ml-2 "
             onClick={() => signIn("github")}
-          /></span>
+          />
         </div>
         <h5 className="text-center pt-4 font-Poppins text-[14px] dark-text-white">
           Don&apos;t have any account?{" "}

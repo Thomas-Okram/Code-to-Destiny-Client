@@ -238,7 +238,7 @@ const CourseContentMedia = ({
         </div>
       </div>
       <h1 className="pt-2 text-[25px] font-[600] dark:text-white text-black ">
-        {data[activeVideo].title}
+        {data[activeVideo]?.title}
       </h1>
       <br />
       <div className="w-full p-4 flex items-center justify-between bg-slate-500 bg-opacity-20 backdrop-blur shadow-[bg-slate-700] rounded shadow-inner">
@@ -521,7 +521,7 @@ const CommentReply = ({
   return (
     <>
       <div className="w-full my-3">
-        {data[activeVideo].questions.map((item: any, index: any) => (
+        {data[activeVideo]?.questions.map((item: any, index: any) => (
           <CommentItem
             key={index}
             data={data}

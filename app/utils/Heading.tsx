@@ -31,7 +31,7 @@ const Heading: FC<HeadProps> = ({ meta }) => {
       <meta httpEquiv="content-language" content="en_US" />
       <meta property="og:title" content={meta?.title} />
       <meta property="og:description" content={meta?.description} />
-      <meta property="og:url" content={WEBSITE_HOST_URL} />
+      <meta property="og:url" content={process.env.WEB_URL} />
       <meta property="og:locale" content="en_US" />
       <meta property="og:siteName" content={meta?.title} />
       <meta property="og:type" content="website" />
@@ -40,15 +40,15 @@ const Heading: FC<HeadProps> = ({ meta }) => {
       <meta name="twitter:description" content={meta?.description} />
       <meta name="twitter:image" content={meta?.image} />
       <meta name="twitter:card" content="summary_large_image" />
-      <link rel="canonical" href={WEBSITE_HOST_URL} />
+      <link rel="canonical" href={process.env.WEB_URL} />
       <link
         rel="alternate"
-        href={`${WEBSITE_HOST_URL}/en-US`}
+        href={`${process.env.WEB_URL}/en-US`}
         hrefLang="en-US"
       />
       <link
         rel="alternate"
-        href={`${WEBSITE_HOST_URL}/de-DE`}
+        href={`${process.env.WEB_URL}/de-DE`}
         hrefLang="de-DE"
       />
     </Head>

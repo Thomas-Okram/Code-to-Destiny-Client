@@ -18,6 +18,7 @@ const page = ({ params }: any) => {
 
   return (
     <div>
+           <title>{meta?.title}</title>
       <Heading
  meta={meta}
       />

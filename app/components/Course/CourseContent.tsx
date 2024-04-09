@@ -7,6 +7,8 @@ import Header from "../Header";
 import CourseContentList from "./CourseContentList";
 import { redirect } from "next/navigation";
 
+import { toast } from "react-hot-toast";
+
 type Props = {
   id: string;
   user:any;
@@ -32,13 +34,17 @@ if(data) {
               image :`${process.env.WEB_URL}/meta-image.webp`,}
 
 }
-if(!data) {redirect('/')}
+if(!isLoading && !data) {
+  redirect('/')
+  toast.error("Failed to load course. Please contact support");
+}
   return (
     <>
       {isLoading ? (
         <Loader />
       ) : (  
         <>
+             <title>{meta?.title}</title>
           <Header activeItem={1} open={open} setOpen={setOpen} route={route} setRoute={setRoute} />
           <div className="w-full grid 800px:grid-cols-10">
             <Heading

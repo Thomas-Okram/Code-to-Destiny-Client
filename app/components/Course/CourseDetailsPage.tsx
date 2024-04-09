@@ -56,7 +56,7 @@ const meta = {
         <Loader />
       ) : (
         <div>
-
+     <title>{meta?.title}</title>
           <Heading meta={meta}/>
           <Header
             route={route}

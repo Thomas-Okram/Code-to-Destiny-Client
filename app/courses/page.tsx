@@ -61,6 +61,7 @@ const meta = {
             activeItem={1}
           />
           <div className="w-[95%] 800px:w-[85%] m-auto min-h-[70vh]">
+          <title>{meta?.title}</title>
             <Heading
            meta={meta}
             />

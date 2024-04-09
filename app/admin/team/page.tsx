@@ -18,6 +18,7 @@ const meta = {
 const page = (props: Props) => {
   return (
     <div>
+           <title>{meta?.title}</title>
       <AdminProtected>
         <Heading
 meta={meta}
