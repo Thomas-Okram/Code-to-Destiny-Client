@@ -6,6 +6,12 @@ import DashboardHeader from "../../../../app/components/Admin/DashboardHeader";
 import EditCourse from "../../../components/Admin/Course/EditCourse";
 
 type Props = {};
+const meta = {
+  title:"Code to Destiny - Admin",
+  description:"Code to Destiny is a platform for students to learn and get help from teachers",
+  keywords:"Programming,MERN,Redux,Machine Learning",
+  image :`${process.env.WEB_URL}/meta-image.webp`
+}
 
 const page = ({ params }: any) => {
   const id = params?.id;
@@ -13,9 +19,7 @@ const page = ({ params }: any) => {
   return (
     <div>
       <Heading
-        title="Code to Destiny - Admin"
-        description="Code to Destiny is a platform for students to learn and get help from teachers"
-        keywords="Prograaming,MERN,Redux,Machine Learning"
+ meta={meta}
       />
       <div className="flex">
         <div className="1500px:w-[16%] w-1/5">

@@ -3,9 +3,9 @@ import Head from "next/head";
 
 interface HeadProps {
   meta: {
-    title: string;
-    description: string;
-    keywords: string;
+    title?: string;
+    description?: string;
+    keywords?: string;
     image: string;
   };
 }

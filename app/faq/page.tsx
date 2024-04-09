@@ -7,6 +7,13 @@ import FAQ from "../components/FAQ/FAQ";
 
 type Props = {};
 
+const meta = {
+  title:"FAQ - Code to Destiny",
+  description:"Code to Destiny is a learning management system for helping programmers.",
+  keywords:"programming,mern",
+  image :`${process.env.WEB_URL}/meta-image.webp`
+}
+
 const Page = (props: Props) => {
   const [open, setOpen] = useState(false);
   const [activeItem, setActiveItem] = useState(4);
@@ -15,9 +22,7 @@ const Page = (props: Props) => {
   return (
     <div className="min-h-screen">
       <Heading
-        title="FAQ - Code to Destiny"
-        description="Code to Destiny is a learning management system for helping programmers."
-        keywords="programming,mern"
+   meta={meta}
       />
       <Header
         open={open}

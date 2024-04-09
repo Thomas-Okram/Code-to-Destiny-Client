@@ -14,14 +14,17 @@ const Page: FC<Props> = (props) => {
   const [activeItem, setActiveItem] = useState(5);
   const [route, setRoute] = useState("Login");
   const { user } = useSelector((state: any) => state.auth);
-
+const meta = {
+  title:`${user?.name} profile - Code to Destiny`,
+  description:"Code to Destiny is a platform for students to learn and get help from teachers",
+  keywords:"programming,mern",
+  image :`${process.env.WEB_URL}/meta-image.webp`
+}
   return (
     <div className="min-h-screen">
       <Protected>
         <Heading
-          title={`${user?.name} profile - Code to Destiny`}
-          description="Code to Destiny is a platform for students to learn and get help from teachers"
-          keywords="Prograaming,MERN,Redux,Machine Learning"
+   meta={meta}
         />
         <Header
           open={open}

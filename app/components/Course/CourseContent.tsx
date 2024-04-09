@@ -5,6 +5,7 @@ import Heading from "@/app/utils/Heading";
 import CourseContentMedia from "./CourseContentMedia";
 import Header from "../Header";
 import CourseContentList from "./CourseContentList";
+import { redirect } from "next/navigation";
 
 type Props = {
   id: string;
@@ -16,21 +17,27 @@ const CourseContent = ({ id,user }: Props) => {
   const [open, setOpen] = useState(false);
   const [route, setRoute] = useState('Login')
   const data = contentData?.content;
-console.log(data)
   const [activeVideo, setActiveVideo] = useState(0);
-const meta = {
-  // title:data?[activeVideo]?.title,
-  title:"anything",
-              description:"anything",
-           //   keywords:data?[activeVideo]?.tags,
-              image :`${process.env.WEB_URL}/meta-image.webp`,
+  let meta = {
+    title:"",
+    description:"",
+    keywords:"",
+    image :`${process.env.WEB_URL}/meta-image.webp`,
+  }
+if(data) { 
+  meta = {
+   title:data[activeVideo]?.title,
+              description:"Learn in depth about this course",
+            keywords:data[activeVideo]?.tags,
+              image :`${process.env.WEB_URL}/meta-image.webp`,}
 
 }
+if(!data) {redirect('/')}
   return (
     <>
       {isLoading ? (
         <Loader />
-      ) : (
+      ) : (  
         <>
           <Header activeItem={1} open={open} setOpen={setOpen} route={route} setRoute={setRoute} />
           <div className="w-full grid 800px:grid-cols-10">

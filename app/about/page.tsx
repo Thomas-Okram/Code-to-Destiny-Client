@@ -11,13 +11,16 @@ const Page = (props: Props) => {
   const [open, setOpen] = useState(false);
   const [activeItem, setActiveItem] = useState(2);
   const [route, setRoute] = useState("Login");
-
+  const meta = {
+    title:"About us - Code to Destiny",
+    description:"Code to Destiny is a learning management system for helping programmers.",
+    keywords:"programming,mern",
+    image :`${process.env.WEB_URL}/meta-image.webp`}
+  
   return (
     <div>
       <Heading
-        title="About us - Code to Destiny"
-        description="Code to Destiny is a learning management system for helping programmers."
-        keywords="programming,mern"
+     meta={meta}
       />
       <Header
         open={open}
