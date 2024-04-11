@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box, Button, Modal } from "@mui/material";
-import { AiOutlineDelete, AiOutlineMail } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlineEdit, AiOutlineMail } from "react-icons/ai";
 import { useTheme } from "next-themes";
 import Loader from "../../Loader/Loader";
 import { format } from "timeago.js";
@@ -12,6 +12,7 @@ import {
 } from "@/redux/features/user/userApi";
 import { styles } from "@/app/styles/style";
 import { toast } from "react-hot-toast";
+import Link from "next/link";
 
 type Props = {
   isTeam?: boolean;
@@ -63,11 +64,11 @@ const AllCourses: FC<Props> = ({ isTeam }) => {
     { field: "id", headerName: "ID", flex: 0.3 },
     { field: "name", headerName: "Name", flex: 0.5 },
     { field: "email", headerName: "Email", flex: 0.5 },
-    { field: "role", headerName: "Role", flex: 0.5 },
+    { field: "role", headerName: "Role", flex: 0.2 },
     { field: "courses", headerName: "Purchased Courses", flex: 0.5 },
     { field: "created_at", headerName: "Joined At", flex: 0.5 },
     {
-      field: " ",
+      field: "delete",
       headerName: "Delete",
       flex: 0.2,
       renderCell: (params: any) => {
@@ -89,7 +90,7 @@ const AllCourses: FC<Props> = ({ isTeam }) => {
       },
     },
     {
-      field: "  ",
+      field: "email",
       headerName: "Email",
       flex: 0.2,
       renderCell: (params: any) => {
@@ -98,6 +99,27 @@ const AllCourses: FC<Props> = ({ isTeam }) => {
             <a href={`mailto:${params.row.email}`}>
               <AiOutlineMail className="dark:text-white text-black" size={20} />
             </a>
+          </>
+        );
+      },
+    }, {
+      field: "edit",
+      headerName: "Edit",
+      flex: 0.2,
+      renderCell: (params: any) => {
+        return (
+          <>
+            <Link
+              // onClick={() => {
+              //   setUserId(params.row.id);
+              // }}
+              href={`/admin/view/${params.row.id}`}
+            >
+              <AiOutlineEdit
+                className="dark:text-white text-black"
+                size={20}
+              />
+            </Link>
           </>
         );
       },
