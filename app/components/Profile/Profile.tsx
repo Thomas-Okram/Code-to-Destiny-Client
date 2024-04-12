@@ -50,7 +50,7 @@ const Profile: FC<Props> = ({ user }) => {
       const filteredCourses = user.courses
         .map((userCourse: any) =>{
           console.log(userCourse,data.courses)
-         return data.courses.find((course: any) => course._id === userCourse._id)}
+         return data.courses.find((course: any) => course._id === userCourse.courseId)}
         )
         .filter((course: any) => course !== undefined);
         console.log(filteredCourses)
