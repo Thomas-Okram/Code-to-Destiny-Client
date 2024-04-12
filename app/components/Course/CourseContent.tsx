@@ -35,8 +35,9 @@ if(data) {
 
 }
 if(!isLoading && !data) {
-  redirect('/')
   toast.error("Failed to load course. Please contact support");
+
+  redirect('/')
 }
   return (
     <>

@@ -15,14 +15,14 @@ const Page = ({params}: Props) => {
   const { isLoading, error, data,refetch } = useLoadUserQuery(undefined, {});
 console.log("id",id)
   useEffect(() => {
-  //  if (data) {
-      // const isPurchased = data.user.courses.find(
-      //   (item: any) => item._id === id
-      // );
-     // if (!isPurchased) {
-        //redirect("/");
-      //}
-   // }
+   if (data) {
+      const isPurchased = data.user.courses.find(
+        (item: any) => item.courseId === id
+      );
+     if (!isPurchased) {
+        redirect("/");
+      }
+   }
     if (error) {
       redirect("/");
     }
