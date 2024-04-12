@@ -13,12 +13,14 @@ type Props = {
 const Page = ({params}: Props) => {
     const id = params.id;
   const { isLoading, error, data,refetch } = useLoadUserQuery(undefined, {});
-console.log("id",id)
+
   useEffect(() => {
+    refetch();
    if (data) {
-      const isPurchased = data.user.courses.find(
+      const isPurchased = data?.user?.courses.find(
         (item: any) => item.courseId === id
       );
+      console.log("data for user to access course",data?.user?.courses)
      if (!isPurchased) {
         redirect("/");
       }

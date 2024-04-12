@@ -112,61 +112,61 @@ const SpecificUser = ({ id }: Props) => {
     }
   };
 
-  useEffect(() => {
-    if (data) {
-      setUserData(data?.user);
-    }
-    if (error) {
-      if ("data" in error) {
-        const errorData = error as any;
-        toast.error(errorData?.data?.message);
-        console.log(errorData);
-      }
-    }
+  
+useEffect(() => {
+  if (deleteSuccess) {
+    refetch();
+    toast.success("Course removed from user");
+  }
+  if (deleteError && "data" in deleteError) {
+    const errorMessage = deleteError as any;
+    toast.error(errorMessage.data.message);
+    console.log(errorMessage);
+  }
+}, [deleteSuccess, deleteError]);
 
-    if (fetchedCoursesData) {
-      setCoursesData(fetchedCoursesData?.courses);
-    }
-    if (coursesError) {
-      if ("data" in coursesError) {
-        const errorData = coursesError as any;
-        toast.error(errorData?.data?.message);
-        console.log(errorData);
-      }
-    }
-    if (updateSuccess) {
-      refetch();
-      toast.success("Profile updated successfully!");
-    }
-    if (updateError) {
-      if ("data" in updateError) {
-        const errorMessage = updateError as any;
-        toast.error(errorMessage.data.message);
-        console.log(errorMessage);
-      }
-    }
-    if (deleteSuccess) {
-      refetch();
-      toast.success("Course removed from user");
-    }
-    if (deleteError) {
-      if ("data" in deleteError) {
-        const errorMessage = deleteError as any;
-        toast.error(errorMessage.data.message);
-        console.log(errorMessage);
-      }
-    }
-  }, [
-    data,
-    error,
-    isSuccess,
-    fetchedCoursesData,
-    coursesError,
-    updateSuccess,
-    updateError,
-    deleteError,
-    deleteSuccess
-  ]);
+
+useEffect(() => {
+  if (updateSuccess) {
+    refetch();
+    toast.success("Profile updated successfully!");
+    setFormData({
+      name: "",
+      email: "",
+      avatar: "",
+      courseId: "",
+    })
+  }
+  if (updateError && "data" in updateError) {
+    const errorMessage = updateError as any;
+    toast.error(errorMessage.data.message);
+    console.log(errorMessage);
+  }
+}, [updateSuccess, updateError]);
+
+
+useEffect(() => {
+  if (data) {
+    setUserData(data?.user);
+  }
+  if (error && "data" in error) {
+    const errorData = error as any;
+    toast.error(errorData?.data?.message);
+    console.log(errorData);
+  }
+}, [data, error, isSuccess]);
+
+
+useEffect(() => {
+  if (fetchedCoursesData) {
+    setCoursesData(fetchedCoursesData?.courses);
+  }
+  if (coursesError && "data" in coursesError) {
+    const errorData = coursesError as any;
+    toast.error(errorData?.data?.message);
+    console.log(errorData);
+  }
+}, [fetchedCoursesData, coursesError]);
 
   console.log(userData);
   console.log(coursesData);
@@ -218,7 +218,7 @@ const SpecificUser = ({ id }: Props) => {
                     <input
                       type="text"
                       className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
-                      value={userData?.name}
+                      placeholder={userData?.name}
                       onChange={(e) =>
                         setFormData({ ...formData, name: e.target.value })
                       }
@@ -232,7 +232,7 @@ const SpecificUser = ({ id }: Props) => {
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
                       }
-                      value={userData?.email}
+                      placeholder={userData?.email}
                     />
                   </div>
                   <div className="w-[100%] pt-2 dark:text-white">
@@ -240,7 +240,7 @@ const SpecificUser = ({ id }: Props) => {
                     {deleting ?<Loader/> :userData?.courses.length > 0 ? (
                       userData?.courses?.map((course: any, index: number) => {
                         const courseId = course?.courseId
-                        return (<span key={index} className="flex gap-2">
+                        return (<span key={index} className="flex items-center gap-2 flex-wrap">
                           <p>{index +1}{". " + course?.courseId}</p>
                           <MdDeleteOutline
                             className="cursor-pointer text-red-500"
@@ -263,6 +263,7 @@ const SpecificUser = ({ id }: Props) => {
                         type="text"
                         className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
                         placeholder={"Enter course id"}
+                        value={formData?.courseId}
                         onChange={(e) =>
                           setFormData({ ...formData, courseId: e.target.value })
                         }
