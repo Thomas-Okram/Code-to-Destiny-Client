@@ -23,7 +23,7 @@ export const reviews = [
     avatar: "https://randomuser.me/api/portraits/men/2.jpg",
     profession: "computer systems engineering student | Zimbabwe",
     comment:
-"Enrolling in Code to Destiny was the best decision I ever made for my career. The instructors' passion for teaching and dedication to our success is palpable in every class. Not only did I gain mastery in the MERN stack, but I also learned invaluable problem-solving and critical thinking skills that are essential in the tech world. The 100% job assistance is not just a promise; it's a reality. Within weeks of completing the course, I had multiple job offers on the table. If you're looking for a transformative learning experience that will catapult your career to new heights, look no further than Code to Destiny!"}  
+"Enrolling in Code to Destiny was the best decision I ever made for my career. The instructors' passion for teaching and dedication to our success is palpable in every class. Not only did I gain mastery in the MERN stack, but I also learned invaluable problem-solving and critical thinking skills that are essential in the tech world. The 100% job assistance is not just a promise; it's a reality. Within weeks of completing the course, I had multiple job offers on the table. If you're looking for a transformative learning experience that will catapult your career to new heights, look no further than Code to Destiny!"},  
   {
     name: "Mina Davidson",
     avatar: "https://randomuser.me/api/portraits/women/2.jpg",
