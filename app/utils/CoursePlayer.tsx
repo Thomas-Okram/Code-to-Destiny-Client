@@ -34,7 +34,7 @@ const [getUrl,{data,error,isSuccess,isLoading}]=useGetVideoOtpMutation();
 // Effect for handling successful fetch
 useEffect(() => {
   if (isSuccess && data) {
-   // setVideoData(data);
+   setVideoData(data);
   }
 }, [isSuccess, data]);
 
@@ -91,10 +91,10 @@ useEffect(() => {
         ></iframe>
       ):(   <div
         style={{ position: "relative",  overflow: "hidden" }}
-        className="flex items-center justify-center"
+        className="flex items-center justify-center h-full"
       >
       
-            <IoReloadCircleOutline className="w-[3rem] h-[3rem] text-white" onClick={fetchUrl()}/>
+            <IoReloadCircleOutline className="w-[3rem] h-[3rem] text-white" />
       
       </div>)}
     </div>
