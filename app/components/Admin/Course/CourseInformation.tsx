@@ -196,7 +196,6 @@ const CourseInformation: FC<Props> = ({
               onChange={(e: any) =>
                 setCourseInfo({ ...courseInfo, level: e.target.value })
               }
-              // onChange={(e: any) => setCourseInfo({ ...courseInfo, level: e.target.value })} 
               id="level"
               placeholder="Beginner/Intermediate/Expert"
               className={`
