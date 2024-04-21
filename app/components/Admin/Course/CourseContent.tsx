@@ -1,4 +1,6 @@
 import { styles } from "@/app/styles/style";
+import VideoPlayer from "@/app/tesst/[id]/page";
+import { DeleteOutlineRounded } from "@mui/icons-material";
 import React, { FC, useState } from "react";
 import { toast } from "react-hot-toast";
 import { AiOutlineDelete, AiOutlinePlusCircle } from "react-icons/ai";
@@ -25,7 +27,7 @@ const CourseContent: FC<Props> = ({
   );
 
   const [activeSection, setActiveSection] = useState(1);
-
+const [video,setVideo] = useState<any>(null)
   const handleSubmit = (e: any) => {
     e.preventDefault();
   };
@@ -37,6 +39,7 @@ const CourseContent: FC<Props> = ({
   };
 
   const handleRemoveLink = (index: number, linkIndex: number) => {
+    console.log(index)
     const updatedData = [...courseContentData];
     updatedData[index].links.splice(linkIndex, 1);
     setCourseContentData(updatedData);
@@ -53,6 +56,7 @@ const CourseContent: FC<Props> = ({
       item.title === "" ||
       item.description === "" ||
       item.videoUrl === "" ||
+      item.video === null ||
       item.links[0].title === "" ||
       item.links[0].url === "" ||
       item.videoLength === ""
@@ -73,6 +77,7 @@ const CourseContent: FC<Props> = ({
       const newContent = {
         videoUrl: "",
         title: "",
+        video:null,
         description: "",
         videoSection: newVideoSection,
         videoLength: "",
@@ -88,6 +93,7 @@ const CourseContent: FC<Props> = ({
       courseContentData[courseContentData.length - 1].title === "" ||
       courseContentData[courseContentData.length - 1].description === "" ||
       courseContentData[courseContentData.length - 1].videoUrl === "" ||
+      courseContentData[courseContentData.length - 1].video === null ||
       courseContentData[courseContentData.length - 1].links[0].title === "" ||
       courseContentData[courseContentData.length - 1].links[0].url === ""
     ) {
@@ -97,6 +103,7 @@ const CourseContent: FC<Props> = ({
       const newContent = {
         videoUrl: "",
         title: "",
+        video:null,
         description: "",
         videoLength: "",
         videoSection: `Untitled Section ${activeSection}`,
@@ -105,7 +112,18 @@ const CourseContent: FC<Props> = ({
       setCourseContentData([...courseContentData, newContent]);
     }
   };
-
+const handleVideoUpload = (e:any,index:number) =>{
+  e.preventDefault();
+  const videoFile = e.target.files[0]; 
+ const updatedData = [...courseContentData];
+ updatedData[index].video = videoFile;
+ setCourseContentData(updatedData);
+}
+const handleRemoveVideoFromContent = (index:number) =>{
+ const updatedData = [...courseContentData];
+ updatedData[index].video = null;
+ setCourseContentData(updatedData);
+}
   const prevButton = () => {
     setActive(active - 1);
   };
@@ -221,6 +239,18 @@ const CourseContent: FC<Props> = ({
                         }}
                       />
                     </div>
+                    <div className="mb-3 ">
+                     { !courseContentData[index].video ? <label htmlFor={`file${index}`} className={"w-full dark:text-white text-black bg-primary/90 flex items-center justify-center min-h-[100px] border cursor-pointer text-xl"}>Upload video</label> :(
+                       <span className="p-2 bg-red-500 inline-flex" onClick={()=>handleRemoveVideoFromContent(index)}> Remove video for this section <DeleteOutlineRounded className="ml-2"/></span>)}
+                      <input
+                       type="file"
+                       accept="video/*"
+                       id={`file${index}`}
+                       className="hidden"
+                        onChange={(e:any)=>{handleVideoUpload(e,index)}}
+                      />
+                        {courseContentData[index]?.video && <VideoPlayer file={courseContentData[index]?.video}/>}
+                    </div>
                     <div className="mb-3">
                       <label className={styles.label}>Video Url</label>
                       <input
@@ -234,6 +264,7 @@ const CourseContent: FC<Props> = ({
                           setCourseContentData(updatedData);
                         }}
                       />
+                    
                     </div>
                     <div className="mb-3">
                       <label className={styles.label}>Video Length (in minutes)</label>

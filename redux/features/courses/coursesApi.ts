@@ -60,6 +60,14 @@ export const coursesApi = apiSlice.injectEndpoints({
         credentials: "include" as const,
       }),
     }),
+    uploadCourseVideo: builder.mutation({
+      query: ({video,title,description,courseId}) => ({
+        url: `upload-course-video`,
+        method: "POST",
+        body: {video,title,description,courseId},
+        credentials: "include" as const,
+      }),
+    }),
     addNewQuestion: builder.mutation({
       query: ({ question, courseId, contentId }) => ({
         url: "add-question",
@@ -130,5 +138,6 @@ export const {
   useAddReviewInCourseMutation,
   useAddReplyInReviewMutation,
   useGetVideoOtpMutation,
-  useGetCourseVideosQuery
+  useGetCourseVideosQuery,
+  useUploadCourseVideoMutation
 } = coursesApi;

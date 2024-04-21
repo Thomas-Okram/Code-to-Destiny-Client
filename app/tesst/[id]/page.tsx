@@ -3,7 +3,8 @@ import VideoJs from "@/app/components/VideoJs";
 import React from "react";
 import videojs from "video.js";
 
-const page = () =>{
+const VideoPlayer = ({file}:any) =>{
+  const vid = URL.createObjectURL(file)
 const playerRef = React.useRef(null);
 
   const videoJsOptions = {
@@ -13,7 +14,7 @@ const playerRef = React.useRef(null);
     responsive: true,
     fluid: true,
     sources: [{
-      src: 'http://localhost:8000/public/videos/course_video_61e72c7f-f5b8-487f-b16f-6546329ceca5.mp4',
+      src: vid,
       type: 'video/mp4'
     }],
     controlBar: {
@@ -58,4 +59,4 @@ const playerRef = React.useRef(null);
   );
    }
 
-   export default page
+   export default VideoPlayer
