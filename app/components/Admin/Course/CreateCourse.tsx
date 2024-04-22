@@ -36,8 +36,8 @@ const CreateCourse = (props: Props) => {
     estimatedPrice: "",
     tags: "",
     level: "",
-    categories:"",
-    demoUrl: "",
+    categories: "",
+    demoVideo: "",
     thumbnail: "",
   });
   const [benefits, setBenefits] = useState([{ title: "" }]);
@@ -47,7 +47,7 @@ const CreateCourse = (props: Props) => {
       videoUrl: "",
       title: "",
       description: "",
-      video:null,
+      video: "",
       videoSection: "Untitled Section",
       videoLength: "",
       links: [
@@ -60,9 +60,7 @@ const CreateCourse = (props: Props) => {
     },
   ]);
 
-
   const [courseData, setCourseData] = useState({});
-
 
   const handleSubmit = async () => {
     // Format benefits array
@@ -74,13 +72,17 @@ const CreateCourse = (props: Props) => {
       title: prerequisite.title,
     }));
 
+
     // Format course content array
     const formattedCourseContentData = courseContentData.map(
-      (courseContent) => ({
+      (courseContent) => {
+        const formDataForVideo = new FormData();
+        formDataForVideo.append("video", courseContent.video); 
+        return{
         videoUrl: courseContent.videoUrl,
         title: courseContent.title,
         description: courseContent.description,
-        video:courseContent.video,
+        video: formDataForVideo,
         videoLength: courseContent.videoLength,
         videoSection: courseContent.videoSection,
         links: courseContent.links.map((link) => ({
@@ -88,8 +90,10 @@ const CreateCourse = (props: Props) => {
           url: link.url,
         })),
         suggestion: courseContent.suggestion,
-      })
-    );
+      }
+    });
+    const formData = new FormData();
+    formData.append("video", courseInfo?.demoVideo); // Corrected typo from demovideo to demoVideo
 
     //   prepare our data object
     const data = {
@@ -101,7 +105,7 @@ const CreateCourse = (props: Props) => {
       tags: courseInfo.tags,
       thumbnail: courseInfo.thumbnail,
       level: courseInfo.level,
-      demoUrl: courseInfo.demoUrl,
+      demoVideo: formData,
       totalVideos: courseContentData.length,
       benefits: formattedBenefits,
       prerequisites: formattedPrerequisites,
@@ -112,8 +116,10 @@ const CreateCourse = (props: Props) => {
 
   const handleCourseCreate = async (e: any) => {
     const data = courseData;
+
+    console.log(data);
     if (!isLoading) {
-      await createCourse(data);
+     //   await createCourse(data);
     }
   };
 
@@ -155,6 +161,8 @@ const CreateCourse = (props: Props) => {
             active={active}
             setActive={setActive}
             courseData={courseData}
+            isLoading={isLoading}
+            courseInfo={courseInfo}
             handleCourseCreate={handleCourseCreate}
           />
         )}

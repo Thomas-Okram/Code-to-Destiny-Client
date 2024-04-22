@@ -1,5 +1,7 @@
 import { styles } from "@/app/styles/style";
+import VideoPlayer from "@/app/tesst/[id]/page";
 import { useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
+import { DeleteOutlineRounded } from "@mui/icons-material";
 import React, { FC, useEffect, useState } from "react";
 
 type Props = {
@@ -185,8 +187,8 @@ const CourseInformation: FC<Props> = ({
           </div>
         </div>
         <br />
-        <div className="w-full flex justify-between">
-          <div className="w-[45%]">
+        <div className="w-full flex flex-col gap-6 justify-between">
+          <div className="w-[100%]">
             <label className={`${styles.label}`}>Course Level</label>
             <input
               type="text"
@@ -202,8 +204,8 @@ const CourseInformation: FC<Props> = ({
             ${styles.input}`}
             />
           </div>
-          <div className="w-[50%]">
-            <label className={`${styles.label} w-[50%]`}>Demo Url</label>
+          <div className="w-[100%]">
+            {/* <label className={`${styles.label} w-[50%]`}>Demo Url</label>
             <input
               type="text"
               name=""
@@ -216,7 +218,19 @@ const CourseInformation: FC<Props> = ({
               placeholder="eer74fd"
               className={`
             ${styles.input}`}
-            />
+            /> */}
+                <div className="mb-3 ">
+                          { !courseInfo.demoVideo ? <label htmlFor={`demoVidFile`} className={"w-full dark:text-white text-black bg-primary/90 flex items-center justify-center min-h-[80px] border cursor-pointer text-xl"}>Upload Demo video</label> :(
+                       <span className="text-white p-2 bg-red-500 inline-flex rounded-md mb-2" onClick={()=> setCourseInfo({...courseInfo, demoVideo:"" })}> Remove Demo video <DeleteOutlineRounded className="ml-2"/></span>)}
+                      <input
+                       type="file"
+                       accept="video/*"
+                       id={`demoVidFile`}
+                       className="hidden"
+                        onChange={(e:any)=>{setCourseInfo({...courseInfo,demoVideo:e.target.files[0]})}}
+                      />
+                        {courseInfo.demoVideo  && <VideoPlayer file={courseInfo.demoVideo } title={"Demo video"}/>}
+                    </div>
           </div>
         </div>
         <br />
@@ -228,6 +242,7 @@ const CourseInformation: FC<Props> = ({
             className="hidden"
             onChange={handleFileChange}
           />
+          <p className="text-black dark:text-white text-left font-medium text-xl mb-2">Course Thumbnail:</p>
           <label
             htmlFor="file"
             className={`w-full min-h-[10vh] dark:border-white border-[#00000026] p-3 border flex items-center justify-center ${
@@ -238,11 +253,13 @@ const CourseInformation: FC<Props> = ({
             onDrop={handleDrop}
           >
             {courseInfo.thumbnail ? (
+              <div className="w-full">
+                
               <img
                 src={courseInfo.thumbnail}
                 alt=""
                 className="max-h-full w-full object-cover"
-              />
+              /></div>
             ) : (
               <span className="text-black dark:text-white">
                 Drag and drop your thumbnail here or click to browse

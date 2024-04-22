@@ -56,7 +56,7 @@ const [video,setVideo] = useState<any>(null)
       item.title === "" ||
       item.description === "" ||
       item.videoUrl === "" ||
-      item.video === null ||
+      item.video === "" ||
       item.links[0].title === "" ||
       item.links[0].url === "" ||
       item.videoLength === ""
@@ -77,7 +77,7 @@ const [video,setVideo] = useState<any>(null)
       const newContent = {
         videoUrl: "",
         title: "",
-        video:null,
+        video: "",
         description: "",
         videoSection: newVideoSection,
         videoLength: "",
@@ -93,7 +93,7 @@ const [video,setVideo] = useState<any>(null)
       courseContentData[courseContentData.length - 1].title === "" ||
       courseContentData[courseContentData.length - 1].description === "" ||
       courseContentData[courseContentData.length - 1].videoUrl === "" ||
-      courseContentData[courseContentData.length - 1].video === null ||
+      courseContentData[courseContentData.length - 1].video === "" ||
       courseContentData[courseContentData.length - 1].links[0].title === "" ||
       courseContentData[courseContentData.length - 1].links[0].url === ""
     ) {
@@ -103,7 +103,7 @@ const [video,setVideo] = useState<any>(null)
       const newContent = {
         videoUrl: "",
         title: "",
-        video:null,
+        video:"",
         description: "",
         videoLength: "",
         videoSection: `Untitled Section ${activeSection}`,
@@ -121,7 +121,7 @@ const handleVideoUpload = (e:any,index:number) =>{
 }
 const handleRemoveVideoFromContent = (index:number) =>{
  const updatedData = [...courseContentData];
- updatedData[index].video = null;
+ updatedData[index].video = "";
  setCourseContentData(updatedData);
 }
   const prevButton = () => {
@@ -240,8 +240,8 @@ const handleRemoveVideoFromContent = (index:number) =>{
                       />
                     </div>
                     <div className="mb-3 ">
-                     { !courseContentData[index].video ? <label htmlFor={`file${index}`} className={"w-full dark:text-white text-black bg-primary/90 flex items-center justify-center min-h-[100px] border cursor-pointer text-xl"}>Upload video</label> :(
-                       <span className="p-2 bg-red-500 inline-flex" onClick={()=>handleRemoveVideoFromContent(index)}> Remove video for this section <DeleteOutlineRounded className="ml-2"/></span>)}
+                     { !courseContentData[index].video ? <label htmlFor={`file${index}`} className={"w-full dark:text-white text-black bg-primary/90 flex items-center justify-center min-h-[70px] border cursor-pointer text-xl"}>Upload video</label> :(
+                       <span className="p-2 bg-red-500 inline-flex rounded-md mb-2" onClick={()=>handleRemoveVideoFromContent(index)}> Remove video for this section <DeleteOutlineRounded className="ml-2"/></span>)}
                       <input
                        type="file"
                        accept="video/*"

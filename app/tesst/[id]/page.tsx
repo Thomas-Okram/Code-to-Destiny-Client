@@ -3,7 +3,7 @@ import VideoJs from "@/app/components/VideoJs";
 import React from "react";
 import videojs from "video.js";
 
-const VideoPlayer = ({file}:any) =>{
+const VideoPlayer = ({file,title}:any) =>{
   const vid = URL.createObjectURL(file)
 const playerRef = React.useRef(null);
 
@@ -52,9 +52,9 @@ const playerRef = React.useRef(null);
 
   return (
     <>
-      <div className="overflow-hidden" >Rest of app here</div>
+      <div className="overflow-hidden text-center text-black dark:text-white text-xl font-normal" >{title}</div>
       <VideoJs options={videoJsOptions} onReady={handlePlayerReady} />
-      <div>Rest of app here</div>
+      {/* <div>Rest of app here</div> */}
     </>
   );
    }

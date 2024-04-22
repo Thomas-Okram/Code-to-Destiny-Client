@@ -3,6 +3,7 @@ import CoursePlayer from "../../../utils/CoursePlayer";
 import { styles } from "../../../../app/styles/style";
 import Ratings from "../../../../app/utils/Ratings";
 import { IoCheckmarkDoneOutline } from "react-icons/io5";
+import VideoPlayer from "@/app/tesst/[id]/page";
 
 type Props = {
   active: number;
@@ -10,6 +11,8 @@ type Props = {
   courseData: any;
   handleCourseCreate: any;
   isEdit?: boolean;
+  isLoading:boolean;
+  courseInfo:any;
 };
 
 const CoursePreview: FC<Props> = ({
@@ -17,7 +20,9 @@ const CoursePreview: FC<Props> = ({
   handleCourseCreate,
   setActive,
   active,
-  isEdit
+  isEdit,
+  isLoading,
+  courseInfo
 }) => {
   const dicountPercentenge =
     ((courseData?.estimatedPrice - courseData?.price) /
@@ -35,13 +40,10 @@ const CoursePreview: FC<Props> = ({
   };
 
   return (
-    <div className="w-[90%] m-auto py-5 mb-5">
+    <div className="w-[90%] m-auto py-5 mb-5 text-black dark:text-white">
       <div className="w-full relative">
         <div className="w-full mt-10">
-          <CoursePlayer
-            videoUrl={courseData?.demoUrl}
-            title={courseData?.title}
-          />
+        {courseData?.demoVideo  && <VideoPlayer file={courseInfo.demoVideo } title={courseData?.title}/>}
         </div>
         <div className="flex items-center">
           <h1 className="pt-5 text-[25px]">
@@ -143,11 +145,11 @@ const CoursePreview: FC<Props> = ({
           Prev
         </div>
         <div
-          className="w-full 800px:w-[180px] flex items-center justify-center h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-8 cursor-pointer"
-          onClick={() => createCourse()}
+          className={`w-full 800px:w-[180px] flex items-center justify-center h-[40px]  text-center text-[#fff] rounded mt-8 ${!isLoading ? " cursor-pointer bg-[#37a39a]" :"bg-[#4c4c4c] cursor-not-allowed"}`}
+          onClick={() => !isLoading && createCourse()}
         >
          {
-          isEdit ? 'Update' : 'Create'
+          isEdit ? 'Update' : isLoading?'Creating...': 'Create'
          }
         </div>
       </div>
