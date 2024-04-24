@@ -1,5 +1,4 @@
 import { styles } from "@/app/styles/style";
-import CoursePlayer from "@/app/utils/CoursePlayer";
 import Ratings from "@/app/utils/Ratings";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -11,6 +10,7 @@ import CheckOutForm from "../Payment/CheckOutForm";
 import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 import Image from "next/image";
 import { VscVerifiedFilled } from "react-icons/vsc";
+import VideoPlayer from "@/app/tesst/[id]/page";
 
 type Props = {
   data: any;
@@ -215,7 +215,7 @@ const CourseDetails = ({
           </div>
           <div className="w-full 800px:w-[35%] relative">
             <div className="sticky top-[100px] left-0 z-50 w-full">
-              <CoursePlayer videoUrl={data?.demoUrl} title={data?.title} />
+              <VideoPlayer url={data?.demoVideo} title={data?.title} />
               <div className="flex items-center">
                 <h1 className="pt-5 text-[25px] text-black dark:text-white">
                   {data.price === 0 ? "Free" : data.price + "$"}

@@ -48,7 +48,7 @@ const EditCourse:FC<Props> = ({id}) => {
         tags: editCourseData.tags,
         level: editCourseData.level,
         categories:editCourseData.categories,
-        demoUrl: editCourseData.demoUrl,
+        demoVideo: editCourseData.demoVideo,
         thumbnail: editCourseData?.thumbnail?.url,
       })
       setBenefits(editCourseData.benefits);
@@ -66,7 +66,7 @@ const EditCourse:FC<Props> = ({id}) => {
     tags: "",
     level:  "",
     categories:"",
-    demoUrl:  "",
+    demoVideo:  "",
     thumbnail:  "",
   });
   const [benefits, setBenefits] = useState([{ title: "" }]);
@@ -125,7 +125,7 @@ const EditCourse:FC<Props> = ({id}) => {
       tags: courseInfo.tags,
       thumbnail: courseInfo.thumbnail,
       level: courseInfo.level,
-      demoUrl: courseInfo.demoUrl,
+      demoVideo: courseInfo.demoVideo,
       totalVideos: courseContentData.length,
       benefits: formattedBenefits,
       prerequisites: formattedPrerequisites,
@@ -170,8 +170,7 @@ const EditCourse:FC<Props> = ({id}) => {
             setActive={setActive}
             courseContentData={courseContentData}
             setCourseContentData={setCourseContentData}
-            handleSubmit={handleSubmit}
-          />
+            handleSubmit={handleSubmit} courseInfo={courseInfo}          />
         )}
 
         {active === 3 && (
@@ -180,8 +179,7 @@ const EditCourse:FC<Props> = ({id}) => {
             setActive={setActive}
             courseData={courseData}
             handleCourseCreate={handleCourseCreate}
-            isEdit={true}
-          />
+            isEdit={true} isLoading={false} courseInfo={courseInfo}          />
         )}
       </div>
       <div className="w-[20%] mt-[100px] h-screen fixed z-[-1] top-18 right-0">

@@ -25,6 +25,7 @@ import { useSelector } from "react-redux";
 import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "next-themes";
+import { VideoLibrary } from "@mui/icons-material";
 
 interface itemProps {
   title: string;
@@ -103,7 +104,7 @@ const AdminSidebar = () => {
           top: 0,
           left: 0,
           height: "100vh",
-          zIndex: 99999999999999,
+          zIndex: 1,
           width: isCollapsed ? "0%" : "16%",
         }}
       >
@@ -176,7 +177,7 @@ const AdminSidebar = () => {
             <Item
               title="Dashboard"
               to="/admin"
-              icon={<HomeOutlinedIcon />}
+              icon={<HomeOutlinedIcon className="text-black dark:text-white"/>}
               selected={selected}
               setSelected={setSelected}
             />
@@ -225,6 +226,15 @@ const AdminSidebar = () => {
               to="/admin/courses"
               icon={
                 <OndemandVideoIcon className="text-black dark:text-white" />
+              }
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="All Videos"
+              to="/admin/videos"
+              icon={
+                <VideoLibrary className="text-black dark:text-white" />
               }
               selected={selected}
               setSelected={setSelected}

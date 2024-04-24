@@ -8,7 +8,6 @@ import CoursePreview from "./CoursePreview";
 import { useCreateCourseMutation } from "../../../../redux/features/courses/coursesApi";
 import { toast } from "react-hot-toast";
 import { redirect } from "next/navigation";
-import {FormData} from "formdata-node";
 
 type Props = {};
 
@@ -61,7 +60,7 @@ const CreateCourse = (props: Props) => {
     },
   ]);
 
-  const [courseData, setCourseData] = useState({});
+  const [courseData, setCourseData] = useState({ name: "ye" });
 
   const handleSubmit = async () => {
     // Format benefits array
@@ -73,24 +72,24 @@ const CreateCourse = (props: Props) => {
       title: prerequisite.title,
     }));
 
-
     // Format course content array
     const formattedCourseContentData = courseContentData.map(
       (courseContent) => {
-        return{
-        videoUrl: courseContent.videoUrl,
-        title: courseContent.title,
-        description: courseContent.description,
-        video: courseContent.video,
-        videoLength: courseContent.videoLength,
-        videoSection: courseContent.videoSection,
-        links: courseContent.links.map((link) => ({
-          title: link.title,
-          url: link.url,
-        })),
-        suggestion: courseContent.suggestion,
+        return {
+          videoUrl: courseContent.videoUrl,
+          title: courseContent.title,
+          description: courseContent.description,
+          video: courseContent.video,
+          videoLength: courseContent.videoLength,
+          videoSection: courseContent.videoSection,
+          links: courseContent.links.map((link) => ({
+            title: link.title,
+            url: link.url,
+          })),
+          suggestion: courseContent.suggestion,
+        };
       }
-    });
+    );
 
     //   prepare our data object
     const data = {
@@ -116,13 +115,12 @@ const CreateCourse = (props: Props) => {
 
     console.log(data);
     if (!isLoading) {
-     //   await createCourse(data);
-  //    const response = await axios.post('/upload-course-video', data, {
-  //     headers: {
-  //         'Content-Type': 'multipart/form-data'
-  //     }
-  // });
-  
+      await createCourse(data);
+      //    const response = await axios.post('/upload-course-video', data, {
+      //     headers: {
+      //         'Content-Type': 'multipart/form-data'
+      //     }
+      // });
     }
   };
 
@@ -156,6 +154,7 @@ const CreateCourse = (props: Props) => {
             courseContentData={courseContentData}
             setCourseContentData={setCourseContentData}
             handleSubmit={handleSubmit}
+            courseInfo={courseInfo}
           />
         )}
 

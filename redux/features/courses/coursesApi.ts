@@ -3,13 +3,10 @@ import { apiSlice } from "../api/apiSlice";
 export const coursesApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createCourse: builder.mutation({
-      query: ({data}) => ({
+      query: (data) => ({
         url: "create-course",
         method: "POST",
-        body: data,
-        header:{
-          'Content-Type': 'multipart/form-data'
-        },
+        body: {...data},
         credentials: "include" as const,
       }),
     }),
@@ -17,6 +14,20 @@ export const coursesApi = apiSlice.injectEndpoints({
       query: () => ({
         url: "get-admin-courses",
         method: "GET",
+        credentials: "include" as const,
+      }),
+    }),
+    getAllVideos: builder.query({
+      query: () => ({
+        url: "get-videos",
+        method: "GET",
+        credentials: "include" as const,
+      }),
+    }),
+    deleteVideo: builder.mutation({
+      query: ({id,fileName}) => ({
+        url: `delete-course-video/${id}/${fileName}`,
+        method: "DELETE",
         credentials: "include" as const,
       }),
     }),
@@ -132,6 +143,7 @@ export const {
   useCreateCourseMutation,
   useGetAllCoursesQuery,
   useDeleteCourseMutation,
+  useDeleteVideoMutation,
   useEditCourseMutation,
   useGetUsersAllCoursesQuery,
   useGetCourseDetailsQuery,
@@ -142,5 +154,6 @@ export const {
   useAddReplyInReviewMutation,
   useGetVideoOtpMutation,
   useGetCourseVideosQuery,
-  useUploadCourseVideoMutation
+  useUploadCourseVideoMutation,
+  useGetAllVideosQuery
 } = coursesApi;

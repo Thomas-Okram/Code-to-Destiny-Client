@@ -1,5 +1,4 @@
 import { styles } from "@/app/styles/style";
-import CoursePlayer from "@/app/utils/CoursePlayer";
 import {
   useAddAnswerInQuestionMutation,
   useAddNewQuestionMutation,
@@ -21,6 +20,7 @@ import { BiMessage } from "react-icons/bi";
 import { VscVerifiedFilled } from "react-icons/vsc";
 import Ratings from "@/app/utils/Ratings";
 import socketIO from "socket.io-client";
+import VideoPlayer from "@/app/tesst/[id]/page";
 const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || "";
 const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
@@ -201,9 +201,9 @@ const CourseContentMedia = ({
 
   return (
     <div className="w-[95%] 800px:w-[86%] py-4 m-auto">
-      <CoursePlayer
+      <VideoPlayer
         title={data[activeVideo]?.title}
-        videoUrl={data[activeVideo]?.videoUrl}
+        url={data[activeVideo]?.videoUrl}
       />
       <div className="w-full flex items-center justify-between my-3">
         <div

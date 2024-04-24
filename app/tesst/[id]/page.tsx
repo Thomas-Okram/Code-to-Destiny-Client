@@ -3,8 +3,10 @@ import VideoJs from "@/app/components/VideoJs";
 import React from "react";
 import videojs from "video.js";
 
-const VideoPlayer = ({file,title}:any) =>{
-  const vid = URL.createObjectURL(file)
+const VideoPlayer = ({file,title,url}:any) =>{
+  let vid = null;
+  if(file){
+   vid = URL.createObjectURL(file)}
 const playerRef = React.useRef(null);
 
   const videoJsOptions = {
@@ -14,7 +16,7 @@ const playerRef = React.useRef(null);
     responsive: true,
     fluid: true,
     sources: [{
-      src: vid,
+      src: vid || url,
       type: 'video/mp4'
     }],
     controlBar: {

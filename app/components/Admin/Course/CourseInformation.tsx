@@ -4,6 +4,7 @@ import { useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
 import { DeleteOutlineRounded } from "@mui/icons-material";
 import axios from "axios";
 import React, { FC, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
 type Props = {
   courseInfo: any;
@@ -21,26 +22,45 @@ const CourseInformation: FC<Props> = ({
   const [dragging, setDragging] = useState(false);
   const { data } = useGetHeroDataQuery("Categories", {});
   const [categories, setCategories] = useState([]);
-  const handleUpload = async (e:any) => {
+  const [video, setVideo] = useState(null);
+  const [videoData, setVideoData] = useState<any>(null);
+  const handleUpload = async (e: any) => {
     e.preventDefault();
-    
-    const formData = new FormData();
-    const file = e.target.elements.demoVidFile.files[0];
-    formData.append('video', file);
-    formData.append('title', courseInfo.name || "no-title");
-    formData.append('description', courseInfo.description || "no-description");
-    formData.append('courseId', courseInfo.name || "no-courseId");
 
     try {
-      const response = await axios.post('http://localhost:8000/upload-course-video', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      // if (!courseInfo.name && !courseInfo.description) {
+      //   toast.error("Course name and description is required to upload video");
+      //   return null;
+      // }
+      const formData = new FormData();
+      setVideo(e.target.files[0]);
+      const file = e.target.files[0];
+      formData.append("video", file);
+      formData.append("title", courseInfo.name || "no-title");
+      formData.append(
+        "description",
+        courseInfo.description || "no-description"
+      );
+      formData.append("courseId", courseInfo.name || "no-courseId");
+
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_SERVER_URI}upload-course-video`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
+      );
+
+      console.log("File uploaded successfully:", response.data);
+      setCourseInfo({
+        ...courseInfo,
+        demoVideo: `${process.env.API_PUBLIC_PATH}${response.data?.video?.filename}`,
       });
-      
-      console.log('File uploaded successfully:', response.data);
+      setVideoData(response.data);
     } catch (error) {
-      console.error('Error uploading file:', error);
+      console.error("Error uploading file:", error);
     }
   };
   useEffect(() => {
@@ -209,8 +229,8 @@ const CourseInformation: FC<Props> = ({
           </div>
         </div>
         <br />
-        <div className="w-full flex flex-col gap-6 justify-between">
-          <div className="w-[100%]">
+        <div className="w-full flex justify-between mb-3">
+          <div className="w-[45%]">
             <label className={`${styles.label}`}>Course Level</label>
             <input
               type="text"
@@ -226,23 +246,23 @@ const CourseInformation: FC<Props> = ({
             ${styles.input}`}
             />
           </div>
-          <div className="w-[100%]">
-            {/* <label className={`${styles.label} w-[50%]`}>Demo Url</label>
+          <div className="w-[50%]">
+            <label className={`${styles.label}`}>Demo video</label>
             <input
               type="text"
+              // readOnly
               name=""
               required
-              value={courseInfo.demoUrl}
-              onChange={(e: any) =>
-                setCourseInfo({ ...courseInfo, demoUrl: e.target.value })
-              }
-              id="demoUrl"
-              placeholder="eer74fd"
+              value={courseInfo.demoVideo}
+              id="demoVideo"
+              placeholder="upload demo video to get url"
               className={`
             ${styles.input}`}
-            /> */}
-                <div className="mb-3 ">
-                          {/* { !courseInfo.demoVideo ? <label htmlFor={`demoVidFile`} className={"w-full dark:text-white text-black bg-primary/90 flex items-center justify-center min-h-[80px] border cursor-pointer text-xl"}>Upload Demo video</label> :(
+            />
+          </div>
+        </div>
+        <div className="mb-3 ">
+          {/* { !courseInfo.demoVideo ? <label htmlFor={`demoVidFile`} className={"w-full dark:text-white text-black bg-primary/90 flex items-center justify-center min-h-[80px] border cursor-pointer text-xl"}>Upload Demo video</label> :(
                        <span className="text-white p-2 bg-red-500 inline-flex rounded-md mb-2" onClick={()=> setCourseInfo({...courseInfo, demoVideo:"" })}> Remove Demo video <DeleteOutlineRounded className="ml-2"/></span>)}
                       <input
                        type="file"
@@ -253,14 +273,28 @@ const CourseInformation: FC<Props> = ({
                       />
                         {courseInfo.demoVideo  && <VideoPlayer file={courseInfo.demoVideo } title={"Demo video"}/>}
                     */}
-                  <form onSubmit={handleUpload} encType="multipart/form-data">
-      <label htmlFor={`demoVidFile`} className={"w-full dark:text-white text-black bg-primary/90 flex items-center justify-center min-h-[80px] border cursor-pointer text-xl"}>
-        Upload Demo video
-      </label>
-      <input type="file" name="demoVidFile" id="demoVidFile" accept="video/*" className="hidden" />
-      <button type="submit">Upload</button>
-    </form> </div>
-          </div>
+          {/* <form onSubmit={handleUpload} encType="multipart/form-data"> */}
+          {videoData?.video?.filename ? (
+            <span>File uploaded : {videoData?.video?.filename}</span>
+          ) : (
+            <label
+              htmlFor={`demoVidFile`}
+              className={
+                "w-full dark:text-white text-black bg-primary/90 flex items-center justify-center min-h-[80px] border cursor-pointer text-xl"
+              }
+            >
+              Upload Demo video
+            </label>
+          )}
+          <input
+            type="file"
+            name="demoVidFile"
+            id="demoVidFile"
+            accept="video/*"
+            className="hidden"
+            onChange={handleUpload}
+          />
+          {video && <VideoPlayer file={video} title={"Demo video"} />}
         </div>
         <br />
         <div className="w-full">
@@ -271,7 +305,9 @@ const CourseInformation: FC<Props> = ({
             className="hidden"
             onChange={handleFileChange}
           />
-          <p className="text-black dark:text-white text-left font-medium text-xl mb-2">Course Thumbnail:</p>
+          <p className="text-black dark:text-white text-left font-medium text-xl mb-2">
+            Course Thumbnail:
+          </p>
           <label
             htmlFor="file"
             className={`w-full min-h-[10vh] dark:border-white border-[#00000026] p-3 border flex items-center justify-center ${
@@ -283,12 +319,12 @@ const CourseInformation: FC<Props> = ({
           >
             {courseInfo.thumbnail ? (
               <div className="w-full">
-                
-              <img
-                src={courseInfo.thumbnail}
-                alt=""
-                className="max-h-full w-full object-cover"
-              /></div>
+                <img
+                  src={courseInfo.thumbnail}
+                  alt=""
+                  className="max-h-full w-full object-cover"
+                />
+              </div>
             ) : (
               <span className="text-black dark:text-white">
                 Drag and drop your thumbnail here or click to browse

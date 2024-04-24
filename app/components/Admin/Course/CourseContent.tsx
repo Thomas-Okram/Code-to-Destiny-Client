@@ -1,6 +1,7 @@
 import { styles } from "@/app/styles/style";
 import VideoPlayer from "@/app/tesst/[id]/page";
 import { DeleteOutlineRounded } from "@mui/icons-material";
+import axios from "axios";
 import React, { FC, useState } from "react";
 import { toast } from "react-hot-toast";
 import { AiOutlineDelete, AiOutlinePlusCircle } from "react-icons/ai";
@@ -13,6 +14,7 @@ type Props = {
   courseContentData: any;
   setCourseContentData: (courseContentData: any) => void;
   handleSubmit: any;
+  courseInfo:any
 };
 
 const CourseContent: FC<Props> = ({
@@ -21,13 +23,54 @@ const CourseContent: FC<Props> = ({
   active,
   setActive,
   handleSubmit: handlleCourseSubmit,
+  courseInfo
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(
     Array(courseContentData.length).fill(false)
   );
 
   const [activeSection, setActiveSection] = useState(1);
-const [video,setVideo] = useState<any>(null)
+  const [video, setVideo] = useState<any>([]);
+  const [videoData,setVideoData]=useState<any>([])
+  const handleVideoUpload = async (e:any,index:number) => {
+    e.preventDefault();
+    // const handleVideoUpload = (e:any,index:number) =>{
+    //   e.preventDefault();
+    //   const videoFile = e.target.files[0]; 
+    //  const updatedData = [...courseContentData];
+    //  updatedData[index].video = videoFile;
+    //  setCourseContentData(updatedData);
+    // }
+    if(     courseInfo.name && courseInfo.description){
+    const formData = new FormData();
+   // const file = e.target.elements.demoVidFile.files[0];
+   setVideo([...video,e.target.files[0]]);
+    const file = e.target.files[0];
+    formData.append('video', file);
+    formData.append('title', courseInfo?.name || "no-title");
+    formData.append('description', courseInfo?.description || "no-description");
+    formData.append('courseId', courseInfo?.name || "no-courseId");
+
+    try {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URI}upload-course-video`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      if (response.data?.video) {
+        toast.success("Video uploaded successfully");
+      }
+      console.log('File uploaded successfully:', response.data);
+      const updatedData = [...courseContentData];
+      updatedData[index].videoUrl =`${process.env.API_PUBLIC_PATH}${response.data?.video?.filename}`;
+       setCourseContentData(updatedData);
+      setVideoData([...videoData,response.data?.video])
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }}else{
+      toast.error("The course general name and description are empty, please add them");
+    }
+  };
   const handleSubmit = (e: any) => {
     e.preventDefault();
   };
@@ -56,7 +99,6 @@ const [video,setVideo] = useState<any>(null)
       item.title === "" ||
       item.description === "" ||
       item.videoUrl === "" ||
-      item.video === "" ||
       item.links[0].title === "" ||
       item.links[0].url === "" ||
       item.videoLength === ""
@@ -93,7 +135,6 @@ const [video,setVideo] = useState<any>(null)
       courseContentData[courseContentData.length - 1].title === "" ||
       courseContentData[courseContentData.length - 1].description === "" ||
       courseContentData[courseContentData.length - 1].videoUrl === "" ||
-      courseContentData[courseContentData.length - 1].video === "" ||
       courseContentData[courseContentData.length - 1].links[0].title === "" ||
       courseContentData[courseContentData.length - 1].links[0].url === ""
     ) {
@@ -112,13 +153,7 @@ const [video,setVideo] = useState<any>(null)
       setCourseContentData([...courseContentData, newContent]);
     }
   };
-const handleVideoUpload = (e:any,index:number) =>{
-  e.preventDefault();
-  const videoFile = e.target.files[0]; 
- const updatedData = [...courseContentData];
- updatedData[index].video = videoFile;
- setCourseContentData(updatedData);
-}
+
 const handleRemoveVideoFromContent = (index:number) =>{
  const updatedData = [...courseContentData];
  updatedData[index].video = "";
@@ -240,8 +275,8 @@ const handleRemoveVideoFromContent = (index:number) =>{
                       />
                     </div>
                     <div className="mb-3 ">
-                     { !courseContentData[index].video ? <label htmlFor={`file${index}`} className={"w-full dark:text-white text-black bg-primary/90 flex items-center justify-center min-h-[70px] border cursor-pointer text-xl"}>Upload video</label> :(
-                       <span className="p-2 bg-red-500 inline-flex rounded-md mb-2" onClick={()=>handleRemoveVideoFromContent(index)}> Remove video for this section <DeleteOutlineRounded className="ml-2"/></span>)}
+                     { !videoData[index]?.filename ? <label htmlFor={`file${index}`} className={"w-full dark:text-white text-black bg-primary/90 flex items-center justify-center min-h-[70px] border cursor-pointer text-xl"}>Upload video</label> :(
+                      <section> <span className="p-2 bg-red-500 inline-flex rounded-md mb-2" onClick={()=>handleRemoveVideoFromContent(index)}> Delete video<DeleteOutlineRounded className="ml-2"/></span><p>File name: {videoData[index]?.filename}</p></section>)}
                       <input
                        type="file"
                        accept="video/*"
@@ -249,13 +284,14 @@ const handleRemoveVideoFromContent = (index:number) =>{
                        className="hidden"
                         onChange={(e:any)=>{handleVideoUpload(e,index)}}
                       />
-                        {courseContentData[index]?.video && <VideoPlayer file={courseContentData[index]?.video}/>}
+                        {video[index] && <VideoPlayer file={video[index]}/>}
                     </div>
                     <div className="mb-3">
                       <label className={styles.label}>Video Url</label>
                       <input
                         type="text"
                         placeholder="sdder"
+                        // readOnly
                         className={`${styles.input}`}
                         value={item.videoUrl}
                         onChange={(e) => {
