@@ -3,10 +3,13 @@ import { apiSlice } from "../api/apiSlice";
 export const coursesApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createCourse: builder.mutation({
-      query: (data) => ({
+      query: ({data}) => ({
         url: "create-course",
         method: "POST",
         body: data,
+        header:{
+          'Content-Type': 'multipart/form-data'
+        },
         credentials: "include" as const,
       }),
     }),

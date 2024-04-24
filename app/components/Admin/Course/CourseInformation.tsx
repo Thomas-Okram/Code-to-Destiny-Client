@@ -2,6 +2,7 @@ import { styles } from "@/app/styles/style";
 import VideoPlayer from "@/app/tesst/[id]/page";
 import { useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
 import { DeleteOutlineRounded } from "@mui/icons-material";
+import axios from "axios";
 import React, { FC, useEffect, useState } from "react";
 
 type Props = {
@@ -20,7 +21,28 @@ const CourseInformation: FC<Props> = ({
   const [dragging, setDragging] = useState(false);
   const { data } = useGetHeroDataQuery("Categories", {});
   const [categories, setCategories] = useState([]);
+  const handleUpload = async (e:any) => {
+    e.preventDefault();
+    
+    const formData = new FormData();
+    const file = e.target.elements.demoVidFile.files[0];
+    formData.append('video', file);
+    formData.append('title', courseInfo.name || "no-title");
+    formData.append('description', courseInfo.description || "no-description");
+    formData.append('courseId', courseInfo.name || "no-courseId");
 
+    try {
+      const response = await axios.post('http://localhost:8000/upload-course-video', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      
+      console.log('File uploaded successfully:', response.data);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  };
   useEffect(() => {
     if (data) {
       setCategories(data.layout.categories);
@@ -220,7 +242,7 @@ const CourseInformation: FC<Props> = ({
             ${styles.input}`}
             /> */}
                 <div className="mb-3 ">
-                          { !courseInfo.demoVideo ? <label htmlFor={`demoVidFile`} className={"w-full dark:text-white text-black bg-primary/90 flex items-center justify-center min-h-[80px] border cursor-pointer text-xl"}>Upload Demo video</label> :(
+                          {/* { !courseInfo.demoVideo ? <label htmlFor={`demoVidFile`} className={"w-full dark:text-white text-black bg-primary/90 flex items-center justify-center min-h-[80px] border cursor-pointer text-xl"}>Upload Demo video</label> :(
                        <span className="text-white p-2 bg-red-500 inline-flex rounded-md mb-2" onClick={()=> setCourseInfo({...courseInfo, demoVideo:"" })}> Remove Demo video <DeleteOutlineRounded className="ml-2"/></span>)}
                       <input
                        type="file"
@@ -230,7 +252,14 @@ const CourseInformation: FC<Props> = ({
                         onChange={(e:any)=>{setCourseInfo({...courseInfo,demoVideo:e.target.files[0]})}}
                       />
                         {courseInfo.demoVideo  && <VideoPlayer file={courseInfo.demoVideo } title={"Demo video"}/>}
-                    </div>
+                    */}
+                  <form onSubmit={handleUpload} encType="multipart/form-data">
+      <label htmlFor={`demoVidFile`} className={"w-full dark:text-white text-black bg-primary/90 flex items-center justify-center min-h-[80px] border cursor-pointer text-xl"}>
+        Upload Demo video
+      </label>
+      <input type="file" name="demoVidFile" id="demoVidFile" accept="video/*" className="hidden" />
+      <button type="submit">Upload</button>
+    </form> </div>
           </div>
         </div>
         <br />

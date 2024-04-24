@@ -8,6 +8,7 @@ import CoursePreview from "./CoursePreview";
 import { useCreateCourseMutation } from "../../../../redux/features/courses/coursesApi";
 import { toast } from "react-hot-toast";
 import { redirect } from "next/navigation";
+import {FormData} from "formdata-node";
 
 type Props = {};
 
@@ -76,13 +77,11 @@ const CreateCourse = (props: Props) => {
     // Format course content array
     const formattedCourseContentData = courseContentData.map(
       (courseContent) => {
-        const formDataForVideo = new FormData();
-        formDataForVideo.append("video", courseContent.video); 
         return{
         videoUrl: courseContent.videoUrl,
         title: courseContent.title,
         description: courseContent.description,
-        video: formDataForVideo,
+        video: courseContent.video,
         videoLength: courseContent.videoLength,
         videoSection: courseContent.videoSection,
         links: courseContent.links.map((link) => ({
@@ -92,8 +91,6 @@ const CreateCourse = (props: Props) => {
         suggestion: courseContent.suggestion,
       }
     });
-    const formData = new FormData();
-    formData.append("video", courseInfo?.demoVideo); // Corrected typo from demovideo to demoVideo
 
     //   prepare our data object
     const data = {
@@ -105,7 +102,7 @@ const CreateCourse = (props: Props) => {
       tags: courseInfo.tags,
       thumbnail: courseInfo.thumbnail,
       level: courseInfo.level,
-      demoVideo: formData,
+      demoVideo: courseInfo.demoVideo,
       totalVideos: courseContentData.length,
       benefits: formattedBenefits,
       prerequisites: formattedPrerequisites,
@@ -120,6 +117,12 @@ const CreateCourse = (props: Props) => {
     console.log(data);
     if (!isLoading) {
      //   await createCourse(data);
+  //    const response = await axios.post('/upload-course-video', data, {
+  //     headers: {
+  //         'Content-Type': 'multipart/form-data'
+  //     }
+  // });
+  
     }
   };
 

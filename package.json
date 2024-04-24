@@ -25,6 +25,8 @@
     "bufferutil": "^4.0.7",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.13",
+    "form-data": "^4.0.0",
+    "formdata-node": "^6.0.3",
     "formik": "^2.4.3",
     "next": "^13.5.6",
     "next-auth": "^4.23.0",
