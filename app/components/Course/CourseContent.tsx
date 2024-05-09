@@ -63,12 +63,12 @@ const CourseContent = ({ id, user }: Props) => {
     }
   }
 
-  if (!isLoading && !data) {
-    toast.error("Failed to load course. Please contact support");
-    redirect("/");
-  }
+  // if (!isLoading && !data) {
+  //   toast.error("Failed to load course. Please contact support");
+  //   redirect("/");
+  // }
 
-  console.log("courseData", data);
+  // console.log("courseData", data);
 
   return (
     <>
