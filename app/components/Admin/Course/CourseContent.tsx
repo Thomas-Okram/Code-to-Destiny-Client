@@ -279,8 +279,8 @@ const handleRemoveVideoFromContent = (index:number) =>{
                       />
                     </div>
                     <div className="mb-3 ">
-                     { !videoData[index]?.filename ? <label htmlFor={`file${index}`} className={"w-full dark:text-white text-black bg-primary/90 flex items-center justify-center min-h-[70px] border cursor-pointer text-xl"}>Upload video</label> : loading ?  <span>File uploading</span> : (
-                      <section> <span className="p-2 bg-red-500 inline-flex rounded-md mb-2" onClick={()=>handleRemoveVideoFromContent(index)}> Delete video<DeleteOutlineRounded className="ml-2"/></span><p>File name: {videoData[index]?.filename}</p></section>)}
+                     { !videoData[index]?.filename && !loading ? <label htmlFor={`file${index}`} className={"w-full dark:text-white text-black bg-primary/90 flex items-center justify-center min-h-[70px] border cursor-pointer text-xl"}>Upload video</label> : loading ?  <span className="dark:text-white text-black">File uploading</span> : (
+                      <section> <span className="p-2 bg-red-500 inline-flex rounded-md mb-2" onClick={()=>handleRemoveVideoFromContent(index)}> Delete video<DeleteOutlineRounded className="ml-2"/></span><p className="dark:text-white text-black">File name: {videoData[index]?.filename}</p></section>)}
                       <input
                        type="file"
                        accept="video/*"
