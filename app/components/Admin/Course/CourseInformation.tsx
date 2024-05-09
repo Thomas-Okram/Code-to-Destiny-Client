@@ -24,6 +24,7 @@ const CourseInformation: FC<Props> = ({
   const [categories, setCategories] = useState([]);
   const [video, setVideo] = useState(null);
   const [videoData, setVideoData] = useState<any>(null);
+  const [loading,setLoading]=useState<boolean>(false);
   const handleUpload = async (e: any) => {
     e.preventDefault();
 
@@ -32,6 +33,7 @@ const CourseInformation: FC<Props> = ({
       //   toast.error("Course name and description is required to upload video");
       //   return null;
       // }
+      setLoading(true)
       const formData = new FormData();
       setVideo(e.target.files[0]);
       const file = e.target.files[0];
@@ -54,9 +56,10 @@ const CourseInformation: FC<Props> = ({
       );
 
       console.log("File uploaded successfully:", response.data);
+      setLoading(false)
       setCourseInfo({
         ...courseInfo,
-        demoVideo: `${process.env.API_PUBLIC_PATH}${response.data?.video?.filename}`,
+        demoVideo: `https://code-to-destiny-server-oe2g.onrender.com/public/videos/${response.data?.video?.filename}`,
       });
       setVideoData(response.data);
     } catch (error) {
@@ -276,7 +279,7 @@ const CourseInformation: FC<Props> = ({
           {/* <form onSubmit={handleUpload} encType="multipart/form-data"> */}
           {videoData?.video?.filename ? (
             <span>File uploaded : {videoData?.video?.filename}</span>
-          ) : (
+          ) : loading ?  <span>File uploading...</span> : (
             <label
               htmlFor={`demoVidFile`}
               className={

@@ -32,6 +32,7 @@ const CourseContent: FC<Props> = ({
   const [activeSection, setActiveSection] = useState(1);
   const [video, setVideo] = useState<any>([]);
   const [videoData,setVideoData]=useState<any>([])
+  const [loading,setLoading]=useState<boolean>(false)
   const handleVideoUpload = async (e:any,index:number) => {
     e.preventDefault();
     // const handleVideoUpload = (e:any,index:number) =>{
@@ -42,6 +43,7 @@ const CourseContent: FC<Props> = ({
     //  setCourseContentData(updatedData);
     // }
     if(     courseInfo.name && courseInfo.description){
+      setLoading(true)
     const formData = new FormData();
    // const file = e.target.elements.demoVidFile.files[0];
    setVideo([...video,e.target.files[0]]);
@@ -61,10 +63,12 @@ const CourseContent: FC<Props> = ({
         toast.success("Video uploaded successfully");
       }
       console.log('File uploaded successfully:', response.data);
+
       const updatedData = [...courseContentData];
-      updatedData[index].videoUrl =`${process.env.API_PUBLIC_PATH}${response.data?.video?.filename}`;
+      updatedData[index].videoUrl =`https://code-to-destiny-server-oe2g.onrender.com/public/videos/${response.data?.video?.filename}`;
        setCourseContentData(updatedData);
       setVideoData([...videoData,response.data?.video])
+      setLoading(false)
     } catch (error) {
       console.error('Error uploading file:', error);
     }}else{
@@ -275,7 +279,7 @@ const handleRemoveVideoFromContent = (index:number) =>{
                       />
                     </div>
                     <div className="mb-3 ">
-                     { !videoData[index]?.filename ? <label htmlFor={`file${index}`} className={"w-full dark:text-white text-black bg-primary/90 flex items-center justify-center min-h-[70px] border cursor-pointer text-xl"}>Upload video</label> :(
+                     { !videoData[index]?.filename ? <label htmlFor={`file${index}`} className={"w-full dark:text-white text-black bg-primary/90 flex items-center justify-center min-h-[70px] border cursor-pointer text-xl"}>Upload video</label> : loading ?  <span>File uploading</span> : (
                       <section> <span className="p-2 bg-red-500 inline-flex rounded-md mb-2" onClick={()=>handleRemoveVideoFromContent(index)}> Delete video<DeleteOutlineRounded className="ml-2"/></span><p>File name: {videoData[index]?.filename}</p></section>)}
                       <input
                        type="file"
